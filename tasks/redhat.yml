@@ -1,0 +1,12 @@
+---
+- name: Install the latest version of Squid
+  dnf:
+    name: squid
+    state: latest
+  notify: Enable and start Squid
+
+- name: Install the latest crypto packages
+  dnf:
+    name: python3-pyOpenSSL
+    state: latest
+  when: https

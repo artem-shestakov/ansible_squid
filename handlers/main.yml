@@ -1,0 +1,11 @@
+---
+- name: Enable and start Squid
+  service:
+    name: squid
+    state: started
+    enabled: yes
+
+- name: Re-start Squid
+  service:
+    name: squid
+    state: restarted

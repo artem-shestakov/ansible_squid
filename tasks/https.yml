@@ -1,0 +1,29 @@
+---
+- name: Create TLS database directory
+  import_tasks: ssl_db.yml
+
+- name: Create certificates directory
+  file:
+    state: directory
+    path: /etc/squid/ssl_cert
+    owner: squid
+    group: squid
+    mode: '0700'
+
+- name: Create CA certificate
+  import_tasks: ca.yml
+  when: groups.all.index(inventory_hostname) == 0
+  notify: Re-start Squid
+
+- name: Copy CA certs to local
+  fetch:
+    src: /etc/squid/ssl_cert/CA_and_key.pem
+    dest: "{{ tmp_directory }}"
+  when: groups.all.index(inventory_hostname) == 0
+
+- name: Copy CA certificates to hosts
+  copy:
+    src: "{{ tmp_directory }}/{{ groups.all[0] }}/etc/squid/ssl_cert/CA_and_key.pem"
+    dest: /etc/squid/ssl_cert/CA_and_key.pem
+  when: groups.all.index(inventory_hostname) != 0
+  notify: Re-start Squid

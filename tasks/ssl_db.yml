@@ -1,0 +1,17 @@
+---
+- name: Delete TLS certificates cache directory
+  file:
+    path: /var/spool/squid/ssl_db
+    state: absent
+
+- name: Create and initialize TLS certificates cache directory
+  shell:
+    cmd: '/usr/lib64/squid/security_file_certgen -c -s /var/spool/squid/ssl_db -M 4MB'
+
+- name: Change directory owner
+  file:
+    path: /var/lib/ssl_db
+    owner: squid
+    group: squid
+    state: directory
+    recurse: yes
