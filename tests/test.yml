@@ -1,0 +1,7 @@
+---
+- name: Install Squid
+  hosts: proxy
+  remote_user: vagrant
+  become: true
+  roles:
+    - "{{playbook_dir}}/../"

@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
             d.vm.hostname = "#{proxy}"
             d.vm.disk :disk, size: "10GB", primary: true
             d.vm.provider "virtualbox" do |vb|
-                vb.memory = 4096
+                vb.memory = 2048
                 vb.cpus = 1
                 vb.customize ["modifyvm", :id, "--audiocontroller", "sb16"]
                 vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]

@@ -4,7 +4,7 @@
 
 - name: Setting TLS proxy
   import_tasks: https.yml
-  when: https
+  when: (http_port['modes'] is defined) and ("ssl-bump" in http_port['modes'])
 
 - name: Copy config file
   template:
@@ -14,5 +14,3 @@
     group: root
     mode: '0644'
   notify: Enable and start Squid
-
-

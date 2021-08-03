@@ -59,19 +59,24 @@ http_access allow localhost
 http_access deny all
 
 # Squid normally listens to port 3128
-{% if https %}
-http_port 3128 ssl-bump \
-  cert=/etc/squid/ssl_cert/CA_and_key.pem \
-  generate-host-certificates=on dynamic_cert_mem_cache_size=4MB
+http_port {{ http_port['port'] }} 
+{%- if http_port['modes'] is defined %} \
+{% for mode, settings in http_port['modes'].items() -%}
+  {%- if mode == "ssl-bump" %}
+  {{ mode }} \
+    cert=/etc/squid/ssl_cert/CA_and_key.pem \
+    generate-host-certificates={% if settings['generate-host-certificates'] %}on{% else %}off{% endif %} \
+    dynamic_cert_mem_cache_size={{ settings['dynamic_cert_mem_cache_size'] }}MB
+    
 sslcrtd_program /usr/lib64/squid/security_file_certgen -s /var/spool/squid/ssl_db -M 4MB
-
 acl step1 at_step SslBump1
-
 ssl_bump peek step1
 ssl_bump bump all
-{% else%}
-http_port 3128
+  {% endif -%} 
+  {% endfor %}
 {% endif %}
+
+
 # Uncomment and adjust the following to add a disk cache directory.
 #cache_dir ufs /var/spool/squid 100 16 256
 

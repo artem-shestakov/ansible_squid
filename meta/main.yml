@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: squid
+  author: Artem Shestakov
+  description: Ansible role to install Squid on Debian/Red Hat OS family.
+  license: license (BSD, MIT)
+
+  min_ansible_version: 2.10
+
+  platforms:
+    - name: EL
+      versions:
+        - "8"
+
+  galaxy_tags:
+    - squid
+    - proxy
+    - forward proxy
+
+dependencies: []

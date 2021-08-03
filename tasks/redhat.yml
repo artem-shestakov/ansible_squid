@@ -9,4 +9,4 @@
   dnf:
     name: python3-pyOpenSSL
     state: latest
-  when: https
+  when: (http_port['modes'] is defined) and ("ssl_bump" in http_port['modes'])
