@@ -19,11 +19,13 @@
   fetch:
     src: /etc/squid/ssl_cert/CA_and_key.pem
     dest: "{{ tmp_directory }}"
+    mode: '0644'
   when: groups.all.index(inventory_hostname) == 0
 
 - name: Copy CA certificates to hosts
   copy:
     src: "{{ tmp_directory }}/{{ groups.all[0] }}/etc/squid/ssl_cert/CA_and_key.pem"
     dest: /etc/squid/ssl_cert/CA_and_key.pem
+    mode: '0644'
   when: groups.all.index(inventory_hostname) != 0
   notify: Re-start Squid

@@ -2,11 +2,11 @@
 - name: Install the latest version of Squid
   dnf:
     name: squid
-    state: latest
+    state: present
   notify: Enable and start Squid
 
 - name: Install the latest crypto packages
   dnf:
     name: python3-pyOpenSSL
-    state: latest
+    state: present
   when: (http_port['modes'] is defined) and ("ssl_bump" in http_port['modes'])

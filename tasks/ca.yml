@@ -24,3 +24,5 @@
   args:
     chdir: /etc/squid/ssl_cert/
   notify: Re-start Squid
+  tags:
+    - skip_ansible_lint
