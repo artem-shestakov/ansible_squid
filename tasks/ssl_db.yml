@@ -7,6 +7,8 @@
 - name: Create and initialize TLS certificates cache directory
   shell:
     cmd: '/usr/lib64/squid/security_file_certgen -c -s /var/spool/squid/ssl_db -M 4MB'
+  tags:
+    - skip_ansible_lint
 
 - name: Change directory owner
   file:
@@ -14,4 +16,4 @@
     owner: squid
     group: squid
     state: directory
-    recurse: yes
+    recurse: true

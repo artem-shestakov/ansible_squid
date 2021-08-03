@@ -1,0 +1,14 @@
+---
+- name: Install Squid
+  hosts: proxy
+  remote_user: vagrant
+  become: true
+  roles:
+    - "{{playbook_dir}}/../"
+  vars:
+    http_port:
+      port: 3128
+      modes:
+        ssl-bump:
+          generate-host-certificates: true
+          dynamic_cert_mem_cache_size: 4MB
